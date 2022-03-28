@@ -1,14 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-
-import { provideFirebaseApp, getApp, initializeApp } from '@angular/fire/app';
-import { getFirestore, provideFirestore } from '@angular/fire/firestore';
-import { FirestoreModule } from '@angular/fire/firestore';
-import { AngularFireModule } from '@angular/fire/compat';
-import { AuthModule } from '@angular/fire/auth';
 
 import { environment } from 'src/environments/environment';
 import { BsNavbarComponent } from './bs-navbar/bs-navbar.component';
@@ -23,8 +15,20 @@ import { AdminOrdersComponent } from './admin/admin-orders/admin-orders.componen
 import { LoginComponent } from './login/login.component';
 import { RouterModule } from '@angular/router';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { AngularFireAuthModule } from '@angular/fire/compat/auth';
 import { AuthGuard } from './services/auth-guard.service';
+
+import { AngularFireAuthModule } from '@angular/fire/compat/auth';
+import { initializeApp, provideFirebaseApp } from '@angular/fire/app';
+import { AngularFireModule } from '@angular/fire/compat';
+// import { AuthModule, provideAuth, getAuth } from '@angular/fire/auth';
+// import {
+//   DatabaseModule,
+//   provideDatabase,
+//   getDatabase,
+// } from '@angular/fire/database';
+import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
+import { AdminAuthGuard } from './services/admin-auth-guard.service';
+import { ProductFormComponent } from './admin/product-form/product-form.component';
 
 @NgModule({
   declarations: [
@@ -39,13 +43,15 @@ import { AuthGuard } from './services/auth-guard.service';
     AdminProductsComponent,
     AdminOrdersComponent,
     LoginComponent,
+    ProductFormComponent,
   ],
   imports: [
     BrowserModule,
     AngularFireModule.initializeApp(environment.firebase),
-    FirestoreModule,
+    provideFirebaseApp(() => initializeApp(environment.firebase)),
     AngularFireAuthModule,
-    AuthModule,
+    // AuthModule,
+    AngularFireDatabaseModule,
     RouterModule.forRoot([
       { path: '', component: HomeComponent },
       { path: 'product', component: ProductsComponent },
@@ -70,15 +76,23 @@ import { AuthGuard } from './services/auth-guard.service';
       {
         path: 'admin/products',
         component: AdminProductsComponent,
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, AdminAuthGuard],
+      },
+      {
+        path: 'admin/products/new',
+        component: ProductFormComponent,
+        canActivate: [AuthGuard, AdminAuthGuard],
       },
       {
         path: 'admin/orders',
         component: AdminOrdersComponent,
-        canActivate: [AuthGuard],
+        canActivate: [AuthGuard, AdminAuthGuard],
       },
     ]),
     NgbModule,
+
+    // provideAuth(() => getAuth()),
+    // provideDatabase(() => getDatabase()),
   ],
   providers: [],
   bootstrap: [AppComponent],
