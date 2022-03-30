@@ -1,1 +1,13 @@
-<p>products works!</p>
+<div class="row">
+  <div class="col-3">
+    <product-filter [category]="category"></product-filter>
+  </div>
+  <div class="col" style="display: flex; flex-wrap: wrap;">
+    <ng-container *ngFor="let p of filteredProducts">
+      <div style="width: 18rem" >
+        <product-card [product]="p"></product-card>
+      </div>
+      
+    </ng-container>
+  </div>
+</div>

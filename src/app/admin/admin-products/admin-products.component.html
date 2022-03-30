@@ -1,1 +1,39 @@
+<p>
 <a routerLink="/admin/products/new" class="btn btn-primary">New Product</a>
+</p>
+
+<p>
+    <input #query type="text" class="form-control" placeholder="Search..." (keyup)="filter(query.value)">
+</p>
+
+<table class="table table-striped">
+    <thead>
+        <tr>
+            <th></th>
+            <th [appSort]="filteredProducts" data-order="desc" data-name="title" scope="col">Title</th>
+            <th [appSort]="filteredProducts" data-order="desc" data-name="price" scope="col">Price</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr *ngFor="let p of filteredProducts |slice:(page-1)*pageSize:page*pageSize; let i = index">
+            <td>{{i+1}}</td>
+            <td>{{p.title}}</td>
+            <td>{{p.price}}</td>
+            <td>
+                <a [routerLink]="['/admin/products/',productIds[i]?.key]" style="text-decoration:none">Edit</a>
+            </td>
+        </tr>
+    </tbody>
+</table>
+
+<div style="display: flex; justify-content: space-between; align-items: center;">
+   
+<span>Results: {{((page-1)*pageSize+1)+ '-'+((page*pageSize>filteredProducts.length)? filteredProducts.length:page*pageSize)+'/'+filteredProducts.length}}</span>
+ <ngb-pagination [collectionSize]="filteredProducts.length" [(page)]="page"></ngb-pagination>
+<div>
+    <span>Limit: </span> <input type="number" min="1" style="width: 20%;" [(ngModel)]="pageSize">
+</div>
+ 
+</div>
+

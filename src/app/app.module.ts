@@ -29,6 +29,10 @@ import { AngularFireModule } from '@angular/fire/compat';
 import { AngularFireDatabaseModule } from '@angular/fire/compat/database';
 import { AdminAuthGuard } from './services/admin-auth-guard.service';
 import { ProductFormComponent } from './admin/product-form/product-form.component';
+import { FormsModule } from '@angular/forms';
+import { SortDirective } from './directive/sort.directive';
+import { ProductFilterComponent } from './products/product-filter/product-filter.component';
+import { ProductCardComponent } from './product-card/product-card.component';
 
 @NgModule({
   declarations: [
@@ -44,16 +48,20 @@ import { ProductFormComponent } from './admin/product-form/product-form.componen
     AdminOrdersComponent,
     LoginComponent,
     ProductFormComponent,
+    SortDirective,
+    ProductFilterComponent,
+    ProductCardComponent,
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     AngularFireModule.initializeApp(environment.firebase),
     provideFirebaseApp(() => initializeApp(environment.firebase)),
     AngularFireAuthModule,
     // AuthModule,
     AngularFireDatabaseModule,
     RouterModule.forRoot([
-      { path: '', component: HomeComponent },
+      { path: '', component: ProductsComponent },
       { path: 'product', component: ProductsComponent },
       { path: 'shopping-cart', component: ShoppingCartComponent },
       { path: 'login', component: LoginComponent },
@@ -76,6 +84,11 @@ import { ProductFormComponent } from './admin/product-form/product-form.componen
       {
         path: 'admin/products',
         component: AdminProductsComponent,
+        canActivate: [AuthGuard, AdminAuthGuard],
+      },
+      {
+        path: 'admin/products/:id',
+        component: ProductFormComponent,
         canActivate: [AuthGuard, AdminAuthGuard],
       },
       {

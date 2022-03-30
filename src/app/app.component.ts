@@ -18,13 +18,15 @@ export class AppComponent {
     private userService: UserService
   ) {
     this.subscription = auth.user$.subscribe((user) => {
-      if (user) {
-        //salvando (realmente haciendo un update para que no se registre muchas veces) del usuario que hizo login
-        userService.save(user);
-        //redirigiendo a la return url si hay una:
-        let returnUrl = localStorage.getItem('returnUrl');
-        router.navigateByUrl(returnUrl as string);
-      }
+      if (!user) return;
+      //salvando (realmente haciendo un update para que no se registre muchas veces) del usuario que hizo login
+      userService.save(user);
+
+      //redirigiendo a la return url si hay una:
+      let returnUrl = localStorage.getItem('returnUrl');
+      if (!returnUrl) return;
+      localStorage.removeItem('returnUrl');
+      router.navigateByUrl(returnUrl as string);
     });
   }
 
