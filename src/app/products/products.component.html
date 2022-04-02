@@ -3,9 +3,9 @@
     <product-filter [category]="category"></product-filter>
   </div>
   <div class="col" style="display: flex; flex-wrap: wrap;">
-    <ng-container *ngFor="let p of filteredProducts">
+    <ng-container *ngFor="let p of filteredProducts; let i = index">
       <div style="width: 18rem" >
-        <product-card [product]="p"></product-card>
+        <product-card [product]="p" [shopping-cart]="cart"></product-card>
       </div>
       
     </ng-container>

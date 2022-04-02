@@ -18,7 +18,9 @@
           <a class="nav-link active" aria-current="page" routerLink="/">Home</a>
         </li> -->
         <li class="nav-item">
-          <a class="nav-link" routerLink="/shopping-cart">Shopping Cart</a>
+          <a class="nav-link" routerLink="/shopping-cart">
+            Shopping Cart <span class="badge bg-warning rounded-pill" *ngIf="cart$ | async as cart">{{cart.totalItemsCount}}</span>
+          </a>
         </li>
         <ng-template #anonymousUser>
           <li class="nav-item">
