@@ -3,13 +3,20 @@ import { Component, OnInit } from '@angular/core';
 @Component({
   selector: 'app-check-out',
   templateUrl: './check-out.component.html',
-  styleUrls: ['./check-out.component.scss']
+  styleUrls: ['./check-out.component.scss'],
 })
 export class CheckOutComponent implements OnInit {
+  shipping = {
+    name: '',
+    addressLine1: '',
+    addressLine2: '',
+    city: '',
+  };
 
-  constructor() { }
-
-  ngOnInit(): void {
+  placeOrder() {
+    console.log(this.shipping);
   }
+  constructor() {}
 
+  ngOnInit(): void {}
 }

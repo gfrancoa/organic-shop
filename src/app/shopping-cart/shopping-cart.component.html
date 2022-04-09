@@ -1,28 +1,49 @@
 <h1>Shopping Cart</h1>
-<ng-container *ngIf="cart$|async as cart">
-    <p>You have {{cart.totalItemsCount}} items in your shopping cart</p>
-    <table class="table" align='center'>
-        <thead>
-            <tr>
-                <th>Product</th>
-                <th>Quantity</th>
-                <th>Price</th>
-            </tr>
-        </thead>
-        <tbody>
-            <tr *ngFor="let item of cart.items">
-                <td>{{item.product.title}}</td>
-                <td style='padding-left:2rem'>{{item.quantity}}</td>
-                <td> {{item.totalPrice | currency:'USD':'symbol'}} </td>
-            </tr>
-        </tbody>
-        <tfoot>
-            <tr>
-                <th>Total:</th>
-                <th></th>
-                <th>{{cart.totalPrice| currency:'USD':'symbol'}}</th>
-            </tr>
-        </tfoot>
-    </table>
-</ng-container>
+<ng-container *ngIf="cart$ | async as cart">
+  <p>You have {{ cart.totalItemsCount }} items in your shopping cart.
 
+    <button *ngIf="cart.items.length" class="btn btn-light btn-sm" (click)="clearCart()">
+    Clear Shopping Cart
+  </button>
+  </p>
+  <table class="table" align="center">
+    <thead>
+      <tr>
+        <th></th>
+        <th>Product</th>
+        <th style="text-align: center">Quantity</th>
+        <th style="text-align: center">Price</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let item of cart.items">
+        <td>
+          <div class="thumbnail" [style.backgroundImage]="'url('+item.product.imageUrl+')'">
+          </div>
+        </td>
+        <td>{{ item.product.title }}</td>
+        <td>
+          <product-quantity
+            [product]="item.product"
+            [shopping-cart]="cart"
+          ></product-quantity>
+        </td>
+        <td style="text-align: center">
+          {{ item.totalPrice | currency: "USD":"symbol" }}
+        </td>
+      </tr>
+    </tbody>
+    <tfoot>
+      <tr>
+        <th>Total:</th>
+        <th></th>
+        <th></th>
+        <th style="text-align: center">
+          {{ cart.totalPrice | currency: "USD":"symbol" }}
+        </th>
+      </tr>
+    </tfoot>
+  </table>
+  <a *ngIf="cart.items.length" routerLink="/check-out" class="btn btn-primary">Check Out</a>
+  
+</ng-container>
