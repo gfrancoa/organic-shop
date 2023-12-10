@@ -1,7 +1,19 @@
-# Oshop
+# Organic Shop
+<img width="1325" alt="image" src="https://github.com/gfrancoa/organic-shop/assets/74123374/c40390ed-682b-42e2-84c0-9d2c395cd2a2">
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0.
+It is a version of an e-commerce, where products can be added to shopping cart. Shopping cart information will be available from any part of the app thanks to global state management using rxjs. It also integrates login using Google account. A non-relational database is used to store product information and orders. This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.0. 
 
+## Technologies
+- Angular
+- Rxjs
+- Firebase
+
+## Contributors
+Solo project
+
+-----
+
+# Instructions to run the program
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
